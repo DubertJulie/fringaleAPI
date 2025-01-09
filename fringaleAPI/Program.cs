@@ -17,7 +17,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Todo API",
         Version = "V1",
-        Description = "Une API pour gérer une liste de tâches",
+        Description = "Une API pour gï¿½rer une liste de tï¿½ches",
         Contact = new OpenApiContact
         {
             Name = "Julie",
@@ -40,7 +40,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// Initialiser la base de données avec des données de test
+// Initialiser la base de donnï¿½es avec des donnï¿½es de test
 using (var scope = app.Services.CreateScope())
 {
     {
@@ -54,18 +54,18 @@ using (var scope = app.Services.CreateScope())
 
 // ROUTES
 
-    // Récupérer tous les clients
+    // Rï¿½cupï¿½rer tous les clients
     app.MapGet("/clients", async (FringaleAPIDb db) =>
         await db.Clients.ToListAsync());
 
-    // Récupérer un client par son ID
+    // Rï¿½cupï¿½rer un client par son ID
     app.MapGet("/Clients/{id}", async (int id, FringaleAPIDb db) =>
         await db.Clients.FindAsync(id)
             is Client client
                 ? Results.Ok(client)
                 : Results.NotFound());
 
-    // Créer un client 
+    // Crï¿½er un client 
     app.MapPost("/clients", async (Client client, FringaleAPIDb db) =>
         {
             db.Clients.Add(client);
@@ -103,18 +103,18 @@ using (var scope = app.Services.CreateScope())
         return Results.NotFound();
     });
 
-    // Récupérer toutes les commandes
+    // Rï¿½cupï¿½rer toutes les commandes
     app.MapGet("/commandes", async (FringaleAPIDb db) =>
         await db.Commandes.ToListAsync());
 
-    // Récupérer une commande par son ID
+    // Rï¿½cupï¿½rer une commande par son ID
     app.MapGet("/commandes/{id}", async (int id, FringaleAPIDb db) =>
         await db.Commandes.FindAsync(id)
             is Commande commande
                 ? Results.Ok(commande)
                 : Results.NotFound());
 
-    // Créer une commande 
+    // Crï¿½er une commande 
     app.MapPost("/commandes", async (Commande commande, FringaleAPIDb db) =>
     {
         db.Commandes.Add(commande);
@@ -149,7 +149,7 @@ using (var scope = app.Services.CreateScope())
         return Results.NotFound();
     });
 
-    // Récupérer toutes les commandes d'un client 
+    // Rï¿½cupï¿½rer toutes les commandes d'un client 
     app.MapGet("/Clients/{id}/Commandes", async (int id, DateTime date, FringaleAPIDb db) =>
     {
         var client = await db.Clients.FindAsync(id);
@@ -157,23 +157,23 @@ using (var scope = app.Services.CreateScope())
 
         var commandes = await db.Commandes
                                 .Where(o => o.Id_cl == id)
-                                .ToListAsync(); // requête LINQ 
+                                .ToListAsync(); // requï¿½te LINQ 
 
         return Results.Ok(commandes);
     });
 
-    // Récupérer les plats 
+    // Rï¿½cupï¿½rer les plats 
     app.MapGet("/Plats", async (FringaleAPIDb db) =>
         await db.Plats.ToListAsync());
 
-    // Récupérer les plats par ID 
+    // Rï¿½cupï¿½rer les plats par ID 
     app.MapGet("/Plats/{id_pl}", async (int id_pl, FringaleAPIDb db) =>
         await db.Plats.FindAsync(id_pl)
             is Plat plat
                 ? Results.Ok(plat)
                 : Results.NotFound());
 
-    // Créer un plat 
+    // Crï¿½er un plat 
     app.MapPost("/Plats", async (Plat plat, FringaleAPIDb db) =>
     {
         db.Plats.Add(plat);
@@ -212,3 +212,58 @@ using (var scope = app.Services.CreateScope())
     });
 
     app.Run();
+// =======
+// using fringaleAPI;
+// using Microsoft.EntityFrameworkCore;
+
+// var builder = WebApplication.CreateBuilder(args);
+// builder.Services.AddDbContext<FringaleDb>(opt => opt.UseInMemoryDatabase("Fringale"));
+// builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+// var app = builder.Build();
+
+// app.MapGet("/Plats", async (FringaleDb db) =>
+//     await db.Plats.ToListAsync());
+
+// app.MapGet("/Plats/{id_pl}", async (int id_pl, FringaleDb db) =>
+//     await db.Plats.FindAsync(id_pl)
+//         is Plat plat
+//             ? Results.Ok(plat)
+//             : Results.NotFound());
+
+// app.MapPost("/Plats", async (Plat plat, FringaleDb db) =>
+// {
+//     db.Plats.Add(plat);
+//     await db.SaveChangesAsync();
+
+//     return Results.Created($"/Plats/{plat.Id_pl}", plat);
+// });
+
+// app.MapPut("/Plats/{id_pl}", async (int id_pl, Plat inputPlat, FringaleDb db) =>
+// {
+//     var plat = await db.Plats.FindAsync(id_pl);
+
+//     if (plat is null) return Results.NotFound();
+
+//     plat.Nom_pl = inputPlat.Nom_pl;
+//     plat.Prix_pl = inputPlat.Prix_pl;
+//     plat.Categorie_pl = inputPlat.Categorie_pl;
+
+//     await db.SaveChangesAsync();
+
+//     return Results.NoContent();
+// });
+
+// app.MapDelete("/Plats/{id}", async (int id_pl, FringaleDb db) =>
+// {
+//     if (await db.Plats.FindAsync(id_pl) is Plat plat)
+//     {
+//         db.Plats.Remove(plat);
+//         await db.SaveChangesAsync();
+//         return Results.NoContent();
+//     }
+
+//     return Results.NotFound();
+// });
+
+// app.Run();
+// >>>>>>> develop

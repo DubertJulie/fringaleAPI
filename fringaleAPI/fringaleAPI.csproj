@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+
     <Compile Remove="JsonData\NewFolder\**" />
     <Compile Remove="NewFolder\**" />
     <Content Remove="JsonData\NewFolder\**" />
@@ -31,6 +32,9 @@
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="7.2.0" />
+=======
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0" />
   </ItemGroup>
 
 </Project>
