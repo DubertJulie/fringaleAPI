@@ -44,6 +44,9 @@ namespace fringaleAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("Id_cl")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Montant_co")
                         .HasColumnType("INTEGER");
 

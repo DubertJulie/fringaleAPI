@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace fringaleAPI.Migrations
 {
     [DbContext(typeof(FringaleAPIDb))]
-    [Migration("20250108110816_InitialCreate")]
+    [Migration("20250109141428_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -45,6 +45,9 @@ namespace fringaleAPI.Migrations
                 {
                     b.Property<int>("Id_co")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Id_cl")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Montant_co")

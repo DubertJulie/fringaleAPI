@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using fringaleAPI;
+﻿using fringaleAPI;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
 
-class FringaleAPIDb : DbContext
+public class FringaleAPIDb : DbContext
 {
     public FringaleAPIDb(DbContextOptions<FringaleAPIDb> options)
         : base(options) { }
@@ -9,4 +11,11 @@ class FringaleAPIDb : DbContext
     public DbSet<Plat> Plats => Set<Plat>();
     public DbSet<Client> Clients => Set<Client>();
     public DbSet<Commande> Commandes => Set<Commande>();
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+        optionsBuilder.ConfigureWarnings(warnings =>
+            warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
+    }
 }

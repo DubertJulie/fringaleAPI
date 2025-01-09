@@ -24,8 +24,8 @@ namespace fringaleAPI
 
         // rajouter le lien avec les plats 
 
-    }   
-    
+    }
+
     public class Client
     {
         [Key]
@@ -36,4 +36,6 @@ namespace fringaleAPI
         public string? Telephone_cl { get; set; }
 
     }
+
+
 }

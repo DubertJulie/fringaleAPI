@@ -1,16 +1,5 @@
 ﻿@fringaleAPI_HostAddress = https://localhost:7073
 
-POST {{fringaleAPI_HostAddress}}/Plats
-Content-Type: application/json
-{
-        "Nom_pl": "Bruschetta",
-        "Prix_pl": 6.5,
-        "Categorie_pl": "Entrée"
-    }
-###
-
-
-
 GET {{fringaleAPI_HostAddress}}/Plats
 
 ###
@@ -28,31 +17,6 @@ GET {{fringaleAPI_HostAddress}}/Plats
 
 @id_pl=2
 DELETE {{fringaleAPI_HostAddress}}/Plats/{id}?id_pl={{id_pl}}
-
-###
-
-POST {{fringaleAPI_HostAddress}}/clients
-Content-Type: application/json
-
-{
-  "Nom_cl": "Lemon",
-  "Prenom_cl": "Lisa",
-  "Adresse_cl": "3 rue des Citronniers, 59000 Lille",
-  "Telephone": "0607080907"
-}
-
-###
-
-@id=1
-PUT {{fringaleAPI_HostAddress}}/clients/{{id}}
-Content-Type: application/json
-
-{
-  "Nom_cl": "Lemon",
-  "Prenom_cl": "Lisa",
-  "Adresse_cl": "3 rue des Citronniers, 59000 Lille",
-  "Telephone_cl": "0607080923"
-}
 
 ###
 

@@ -32,7 +32,8 @@ namespace fringaleAPI.Migrations
                 {
                     Id_co = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Montant_co = table.Column<int>(type: "INTEGER", nullable: false)
+                    Montant_co = table.Column<int>(type: "INTEGER", nullable: false),
+                    Id_cl = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
