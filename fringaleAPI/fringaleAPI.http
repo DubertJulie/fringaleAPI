@@ -1,12 +1,1 @@
 ﻿@fringaleAPI_HostAddress = https://localhost:7073
-
-POST {{fringaleAPI_HostAddress}}/Plats
-Content-Type: application/json
-
-{
-  "Nom_pl": "Bruschetta",
-  "Categorie_pl": "Entrée",
-  "Prix_pl": 6.5
-}
-
-###
