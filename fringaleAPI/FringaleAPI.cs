@@ -1,28 +1,35 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace fringaleAPI
 {
     public class Plat
     {
-        public int id_me { get; set; }
-        public required string? Nom_me { get; set; }
-        public required int Prix_me { get; set; }
-        public string? Categorie_me { get; set; }
-
-    }    
+        [Key]
+        public int Id_pl { get; set; } // clé primaire
+        public required string Nom_pl { get; set; }
+        public required double Prix_pl { get; set; }
+        public string? Categorie_pl { get; set; } // vaut "Entrée", "Plat", "Dessert" ou "Boisson".
+    }
 
     public class Commande
     {
-        public int id_co { get; set; }
+        [Key]
+        public int Id_co { get; set; } // clé primaire
         public int Montant_co { get; set; }
+
         public DateTime Date_co = DateTime.Now;
+        public int? Id_cl { get; set; } // clé vers client ?
+
+        // rajouter le lien avec les plats 
 
     }   
     
     public class Client
     {
-        public int? id_cl { get; set; }
+        [Key]
+        public int Id_cl { get; set; } // clé primaire
         public required string? Nom_cl { get; set; }
         public required string? Prenom_cl { get; set; }
         public string? Adresse_cl { get; set; }
