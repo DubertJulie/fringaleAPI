@@ -25,6 +25,9 @@ builder.Services.AddSwaggerGen(c =>
             Url = new Uri("https://votre-site.com"),
         }
     });
+
+    // Activer les annotations
+    c.EnableAnnotations();
 });
 
 
@@ -35,12 +38,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/V1/swagger.json", "Todo API V1");
-        c.RoutePrefix = "";
+        c.SwaggerEndpoint("/swagger/V1/swagger.json", "FringaleAPI V1");
+        c.RoutePrefix = ""; // possibilité de changer le prefix 
     });
 }
 
-// Initialiser la base de donn�es avec des donn�es de test
+
+
+// Initialiser la base de donn�es mon json (méthode seed)
 using (var scope = app.Services.CreateScope())
 {
     {
