@@ -47,7 +47,6 @@ public static class DbInitializer
             }
         }
 
-
         // Charger les plats
         if (!context.Plats.Any())
         {

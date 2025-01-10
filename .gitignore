@@ -399,6 +399,13 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+
+# bdd EXCLUES
+*.db
+*.db-shm
+*.db-wal
+migrations/
+
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 

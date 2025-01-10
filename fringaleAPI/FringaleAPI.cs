@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 
 namespace fringaleAPI
@@ -18,8 +19,7 @@ namespace fringaleAPI
         [Key]
         public int Id_co { get; set; } // clé primaire
         public int Montant_co { get; set; }
-
-        public DateTime Date_co = DateTime.Now;
+        public DateTime Date_co { get; set; } = DateTime.Now;
         public int? Id_cl { get; set; } // clé vers client ?
 
         // rajouter le lien avec les plats 
