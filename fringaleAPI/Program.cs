@@ -7,6 +7,8 @@ using System.Text.Json;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
+// test pull
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<FringaleAPIDb>(opt => opt.UseSqlite("Data Source=FringaleAPI.db"));
 
