@@ -6,6 +6,7 @@ using System;
 using System.Text.Json;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<FringaleAPIDb>(opt => opt.UseSqlite("Data Source=FringaleAPI.db"));
@@ -112,14 +113,21 @@ app.MapGet("/commandes/by/{date_co}", async (DateTime date_co, FringaleAPIDb db)
 );
 
 
-// Créer une commande 
-app.MapPost("/commandes", async (Commande commande, FringaleAPIDb db) =>
-    {
-        db.Commandes.Add(commande);
-        await db.SaveChangesAsync();
+//// Créer une commande 
+//app.MapPost("/commandes", async (Commande commande, PlatParCommande platParCommande, FringaleAPIDb db) =>
+//    {
+//        db.Commandes.Add(commande);
+//        db.PlatParCommande.Add(platParCommande);
 
-        return Results.Created($"/clients/{commande.Id_co}", commande);
-    });
+//        platParCommande.Id_co = commande.Id_co;
+//        foreach (Plat plat in platParCommande.Plats)
+//        {
+//            commande.Montant_co += plat.Prix_pl;
+//        }
+
+//        await db.SaveChangesAsync();
+//        return Results.Created($"/commande/client/{commande.Id_cl}", commande);
+//    });
 
 // Modifier une commande
 app.MapPut("/commandes/{id}", async (int id, Commande inputCommande, FringaleAPIDb db) =>
