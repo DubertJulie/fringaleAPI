@@ -48,11 +48,11 @@ namespace fringaleAPI.Migrations
                     b.Property<DateTime>("Date_co")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Id_cl")
+                    b.Property<int>("Id_cl")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Montant_co")
-                        .HasColumnType("INTEGER");
+                    b.Property<double>("Montant_co")
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id_co");
 
@@ -78,6 +78,54 @@ namespace fringaleAPI.Migrations
                     b.HasKey("Id_pl");
 
                     b.ToTable("Plats");
+                });
+
+            modelBuilder.Entity("fringaleAPI.PlatParCommande", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("CommandeId_co")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Id_co")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Id_pl")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("PlatId_pl")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommandeId_co");
+
+                    b.HasIndex("PlatId_pl");
+
+                    b.ToTable("PlatParCommande");
+                });
+
+            modelBuilder.Entity("fringaleAPI.PlatParCommande", b =>
+                {
+                    b.HasOne("fringaleAPI.Commande", null)
+                        .WithMany("PlatParCommandes")
+                        .HasForeignKey("CommandeId_co");
+
+                    b.HasOne("fringaleAPI.Plat", null)
+                        .WithMany("PlatParCommandes")
+                        .HasForeignKey("PlatId_pl");
+                });
+
+            modelBuilder.Entity("fringaleAPI.Commande", b =>
+                {
+                    b.Navigation("PlatParCommandes");
+                });
+
+            modelBuilder.Entity("fringaleAPI.Plat", b =>
+                {
+                    b.Navigation("PlatParCommandes");
                 });
 #pragma warning restore 612, 618
         }

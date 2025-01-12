@@ -12,17 +12,21 @@ namespace fringaleAPI
         public required string Nom_pl { get; set; }
         public required double Prix_pl { get; set; }
         public string? Categorie_pl { get; set; } // vaut "Entrée", "Plat", "Dessert" ou "Boisson".
+
+        //Liste des plats :
+        public List<PlatParCommande> PlatParCommandes { get; } = [];
     }
 
     public class Commande
     {
         [Key]
         public int Id_co { get; set; } // clé primaire
-        public double Montant_co = 0;
+        public double Montant_co { get; set; }
         public DateTime Date_co { get; set; } = DateTime.Now;
         public required int Id_cl { get; set; } // clé vers client
 
-        // rajouter le lien avec les plats 
+        //Liste des plats :
+        public List<PlatParCommande> PlatParCommandes { get; } = [];
 
     }
 
@@ -41,8 +45,22 @@ namespace fringaleAPI
     {
         [Key]
         public int Id { get; set; }
-        public int Id_co = 0;
-        public required List<Plat> Plats { get; set; }
+        
+        public int Id_co { get; set; }
+        public int Id_pl { get; set; }
 
+
+        public PlatParCommande(int id_co, int id_pl)
+        {
+            Id_co = id_co;
+            Id_pl = id_pl;
+            //Plat = plat;
+            //Commande = commande;
+        }
+
+        public PlatParCommande()
+        {
+
+        }
     }
 }
