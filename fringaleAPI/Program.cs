@@ -96,7 +96,16 @@ app.MapPut("/clients/{id}", async (int id, Client inputClient, FringaleAPIDb db)
 // Récupérer toutes les commandes
 app.MapGet("/commandes", async (FringaleAPIDb db) =>
 {
-    return await db.Commandes.ToListAsync();
+    var commandes = await db.Commandes.ToListAsync();
+
+
+    foreach (Commande commande in commandes)
+    {
+        var platParCommande = await db.PlatParCommande.Where(ppc => ppc.Id_co == commande.Id_co).ToListAsync();
+        commande.PlatParCommandes = platParCommande;
+    }
+    
+    return commandes;
 
 });
 
@@ -107,25 +116,11 @@ app.MapGet("/commandes/{id}", async (int id_co, FringaleAPIDb db) =>
     var commande = await db.Commandes.FindAsync(id_co);
     if (commande == null) return Results.NotFound();
 
-
     var platParCommande = await db.PlatParCommande.Where(ppc => ppc.Id_co == id_co).ToListAsync();
 
+    commande.PlatParCommandes = platParCommande;
 
-    return Results.Ok(new
-    {
-        id_co = commande.Id_co,
-        montant_co = commande.Montant_co,
-        date_co = commande.Date_co,
-        id_cl = commande.Id_cl,
-        platParCommandes = platParCommande
-    });
-
-    //await db.Commandes.FindAsync(id)
-
-    //    is Commande commande
-    //        ? Results.Ok(commande)
-    //        : Results.NotFound();
-
+    return Results.Ok(commande);
 });
 
 //Récupérer une commande par sa DATE
@@ -144,35 +139,21 @@ app.MapPost("/commandes", async (Commande commande, FringaleAPIDb db) =>
         var client = await db.Clients.FindAsync(commande.Id_cl);
         if (client is null) return Results.NotFound();
 
-        var newOrder = new Commande
-        {
-            Id_co = commande.Id_co,
-            Montant_co = commande.Montant_co,
-            Date_co = commande.Date_co,
-            Id_cl = commande.Id_cl,
-            PlatParCommandes = new List<PlatParCommande>()
-        };
 
         db.Commandes.Add(commande);
         await db.SaveChangesAsync();
 
-        foreach (var platParCommande in commande.PlatParCommandes)
+        foreach (PlatParCommande platParCommande in commande.PlatParCommandes)
         {
+
+            platParCommande.Id_co = commande.Id_co;
+
             var plat = await db.Plats.FindAsync(platParCommande.Id_pl);
             if (plat is null) return Results.NotFound();
-
-            var newPlatParCommande = new PlatParCommande
-            {
-                Id_co = commande.Id_co,
-                Id_pl = platParCommande.Id_pl
-            };
-            //db.PlatParCommande.Add(newPlatParCommande);
-            newOrder.PlatParCommandes.Add(newPlatParCommande);
 
             commande.Montant_co += plat.Prix_pl;
         }
 
-        //db.PlatParCommande.Add((ICollection)commande.PlatParCommandes.ToList());
 
         await db.SaveChangesAsync();
         return Results.Created($"/commande/{commande.Id_co}", commande);
