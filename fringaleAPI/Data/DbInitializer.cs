@@ -22,7 +22,7 @@ public static class DbInitializer
 
     public static void Seed(FringaleAPIDb context)
     {
-        string basePath = "C:\\Users\\dbtju\\Documents\\dot-com\\repos\\fringaleAPI\\fringaleAPI\\JsonData";
+        string basePath = "C:\\Users\\Utilisateur\\source\\repos\\fringaleAPI\\fringaleAPI\\JsonData\\";
         string clientsFilePath = Path.Combine(basePath, "clients.json");
         string articlesFilePath = Path.Combine(basePath, "articles.json");
 

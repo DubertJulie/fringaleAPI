@@ -95,14 +95,9 @@ namespace fringaleAPI.Migrations
                     b.Property<int>("Id_pl")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("PlatId_pl")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CommandeId_co");
-
-                    b.HasIndex("PlatId_pl");
 
                     b.ToTable("PlatParCommande");
                 });
@@ -112,18 +107,9 @@ namespace fringaleAPI.Migrations
                     b.HasOne("fringaleAPI.Commande", null)
                         .WithMany("PlatParCommandes")
                         .HasForeignKey("CommandeId_co");
-
-                    b.HasOne("fringaleAPI.Plat", null)
-                        .WithMany("PlatParCommandes")
-                        .HasForeignKey("PlatId_pl");
                 });
 
             modelBuilder.Entity("fringaleAPI.Commande", b =>
-                {
-                    b.Navigation("PlatParCommandes");
-                });
-
-            modelBuilder.Entity("fringaleAPI.Plat", b =>
                 {
                     b.Navigation("PlatParCommandes");
                 });

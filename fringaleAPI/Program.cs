@@ -95,14 +95,38 @@ app.MapPut("/clients/{id}", async (int id, Client inputClient, FringaleAPIDb db)
 
 // Récupérer toutes les commandes
 app.MapGet("/commandes", async (FringaleAPIDb db) =>
-    await db.Commandes.ToListAsync());
+{
+    return await db.Commandes.ToListAsync();
+
+});
 
 // Récupérer une commande par son ID
-app.MapGet("/commandes/{id}", async (int id, FringaleAPIDb db) =>
-    await db.Commandes.FindAsync(id)
-        is Commande commande
-            ? Results.Ok(commande)
-            : Results.NotFound());
+app.MapGet("/commandes/{id}", async (int id_co, FringaleAPIDb db) =>
+{
+
+    var commande = await db.Commandes.FindAsync(id_co);
+    if (commande == null) return Results.NotFound();
+
+
+    var platParCommande = await db.PlatParCommande.Where(ppc => ppc.Id_co == id_co).ToListAsync();
+
+
+    return Results.Ok(new
+    {
+        id_co = commande.Id_co,
+        montant_co = commande.Montant_co,
+        date_co = commande.Date_co,
+        id_cl = commande.Id_cl,
+        platParCommandes = platParCommande
+    });
+
+    //await db.Commandes.FindAsync(id)
+
+    //    is Commande commande
+    //        ? Results.Ok(commande)
+    //        : Results.NotFound();
+
+});
 
 //Récupérer une commande par sa DATE
 app.MapGet("/commandes/by/{date_co}", async (DateTime date_co, FringaleAPIDb db) =>
@@ -113,35 +137,45 @@ app.MapGet("/commandes/by/{date_co}", async (DateTime date_co, FringaleAPIDb db)
     }
 );
 
-// Créer une commande 
-//Créer une commande vide
+// Créer une commande
 app.MapPost("/commandes", async (Commande commande, FringaleAPIDb db) =>
     {
+
+        var client = await db.Clients.FindAsync(commande.Id_cl);
+        if (client is null) return Results.NotFound();
+
+        var newOrder = new Commande
+        {
+            Id_co = commande.Id_co,
+            Montant_co = commande.Montant_co,
+            Date_co = commande.Date_co,
+            Id_cl = commande.Id_cl,
+            PlatParCommandes = new List<PlatParCommande>()
+        };
+
         db.Commandes.Add(commande);
+        await db.SaveChangesAsync();
+
+        foreach (var platParCommande in commande.PlatParCommandes)
+        {
+            var plat = await db.Plats.FindAsync(platParCommande.Id_pl);
+            if (plat is null) return Results.NotFound();
+
+            var newPlatParCommande = new PlatParCommande
+            {
+                Id_co = commande.Id_co,
+                Id_pl = platParCommande.Id_pl
+            };
+            //db.PlatParCommande.Add(newPlatParCommande);
+            newOrder.PlatParCommandes.Add(newPlatParCommande);
+
+            commande.Montant_co += plat.Prix_pl;
+        }
+
+        //db.PlatParCommande.Add((ICollection)commande.PlatParCommandes.ToList());
 
         await db.SaveChangesAsync();
         return Results.Created($"/commande/{commande.Id_co}", commande);
-    });
-//Ajouter des plats à une commande
-app.MapPut("/commandes/{id_co}/ajoutPlat/{id_pl}", async (int id_co, int id_pl, FringaleAPIDb db) =>
-    {
-        var plat = await db.Plats.FindAsync(id_pl);
-        if (plat is null) return Results.NotFound();
-
-        var commande = await db.Commandes.FindAsync(id_co);
-        if (commande is null) return Results.NotFound();
-
-        PlatParCommande platParCommande = new PlatParCommande (id_co, id_pl);
-        db.PlatParCommande.Add(platParCommande);
-
-        commande.Montant_co += plat.Prix_pl;
-
-        commande.PlatParCommandes.Add(platParCommande);
-        plat.PlatParCommandes.Add(platParCommande);
-
-
-        await db.SaveChangesAsync();
-        return Results.Ok(commande);
     });
 
 // Modifier une commande

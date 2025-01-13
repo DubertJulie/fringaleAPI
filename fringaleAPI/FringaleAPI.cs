@@ -13,8 +13,6 @@ namespace fringaleAPI
         public required double Prix_pl { get; set; }
         public string? Categorie_pl { get; set; } // vaut "Entrée", "Plat", "Dessert" ou "Boisson".
 
-        //Liste des plats :
-        public List<PlatParCommande> PlatParCommandes { get; } = [];
     }
 
     public class Commande
@@ -26,8 +24,9 @@ namespace fringaleAPI
         public required int Id_cl { get; set; } // clé vers client
 
         //Liste des plats :
-        public List<PlatParCommande> PlatParCommandes { get; } = [];
+        public ICollection<PlatParCommande>? PlatParCommandes { get; set; }
 
+        
     }
 
     public class Client
@@ -45,22 +44,8 @@ namespace fringaleAPI
     {
         [Key]
         public int Id { get; set; }
-        
+
         public int Id_co { get; set; }
         public int Id_pl { get; set; }
-
-
-        public PlatParCommande(int id_co, int id_pl)
-        {
-            Id_co = id_co;
-            Id_pl = id_pl;
-            //Plat = plat;
-            //Commande = commande;
-        }
-
-        public PlatParCommande()
-        {
-
-        }
     }
 }
