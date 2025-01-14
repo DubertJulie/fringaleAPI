@@ -42,7 +42,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// Initialiser la base de donn�es avec un json (méthode seed)
+// Initialiser la base de donn es avec un json (méthode seed)
 using (var scope = app.Services.CreateScope())
 {
     {
@@ -148,7 +148,7 @@ gestionClients.MapGet("/{id}/commandes", async (int id, FringaleAPIDb db) =>
 
     var commandes = await db.Commandes
                             .Where(o => o.Id_cl == id)
-                            .ToListAsync(); // requ�te LINQ 
+                            .ToListAsync(); // requ te LINQ 
 
     return Results.Ok(commandes);
 });
@@ -195,17 +195,32 @@ gestionCommandes.MapDelete("/{id}", DeleteCommand)
 // Récupérer toutes les commandes
 static async Task<IResult> GetAllCommands(FringaleAPIDb db)
 {
-    return TypedResults.Ok(await db.Commandes.ToListAsync());
+    var commandes = await db.Commandes.ToListAsync();
+
+
+    foreach (Commande commande in commandes)
+    {
+        var platParCommande = await db.PlatParCommande.Where(ppc => ppc.Id_co == commande.Id_co).ToListAsync();
+        commande.PlatParCommandes = platParCommande;
+    }
+
+    return TypedResults.Ok(commandes);
 }
 
+
 // Récupérer une commande par son ID
-static async Task<IResult> GetCommandbyId(int id, FringaleAPIDb db)
+static async Task<IResult> GetCommandbyId(int id_co, FringaleAPIDb db)
 {
-    return await db.Commandes.FindAsync(id)
-        is Commande commande
-            ? TypedResults.Ok(commande)
-            : TypedResults.NotFound();
+    var commande = await db.Commandes.FindAsync(id_co);
+    if (commande == null) return Results.NotFound();
+
+    var platParCommande = await db.PlatParCommande.Where(ppc => ppc.Id_co == id_co).ToListAsync();
+
+    commande.PlatParCommandes = platParCommande;
+
+    return TypedResults.Ok(commande);
 }
+
 
 // Récupérer une commande par sa date
 static async Task<IResult> GetCommandbyDate(DateTime date_co, FringaleAPIDb db)
@@ -217,11 +232,29 @@ static async Task<IResult> GetCommandbyDate(DateTime date_co, FringaleAPIDb db)
 // Créer une commande
 static async Task<IResult> CreateCommand(Commande commande, FringaleAPIDb db)
 {
+
+    var client = await db.Clients.FindAsync(commande.Id_cl);
+    if (client is null) return Results.NotFound();
+
+
     db.Commandes.Add(commande);
     await db.SaveChangesAsync();
 
-    return TypedResults.Created($"/clients/{commande.Id_co}", commande);
-}
+    foreach (PlatParCommande platParCommande in commande.PlatParCommandes)
+    {
+
+        platParCommande.Id_co = commande.Id_co;
+
+        var plat = await db.Plats.FindAsync(platParCommande.Id_pl);
+        if (plat is null) return Results.NotFound();
+
+        commande.Montant_co += plat.Prix_pl;
+    }
+
+
+    await db.SaveChangesAsync();
+    return TypedResults.Created($"/commande/{commande.Id_co}", commande);
+};
 
 
 // Modifier une commande par son ID
