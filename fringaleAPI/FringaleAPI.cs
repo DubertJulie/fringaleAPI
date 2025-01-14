@@ -18,11 +18,12 @@ namespace fringaleAPI
     {
         [Key]
         public int Id_co { get; set; } // clé primaire
-        public int Montant_co { get; set; }
+        public double Montant_co { get; set; }
         public DateTime Date_co { get; set; } = DateTime.Now;
         public int? Id_cl { get; set; } // clé vers client ?
 
-        // rajouter le lien avec les plats 
+        //Liste des plats :
+        public ICollection<PlatParCommande>? PlatParCommandes { get; set; }
 
     }
 
@@ -35,6 +36,15 @@ namespace fringaleAPI
         public string? Adresse_cl { get; set; }
         public string? Telephone_cl { get; set; }
 
+    }
+
+    public class PlatParCommande //table d'association Plat/Commande
+    {
+        [Key]
+        public int Id { get; set; }
+
+        public int Id_co { get; set; }
+        public int Id_pl { get; set; }
     }
 
 
