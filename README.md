@@ -55,14 +55,7 @@ Vous pouvez vérifier la version avec cette commande:
 5. Lancez l'API:
  
    dotnet run
-
-   L'application sera disponible à http://localhost:5000.
-
-# Documentation de l'API avec Swagger
-Lors de l'exécution en mode développement, vous pouvez accéder à la documentation Swagger de l'API à l'URL suivante :
-http://localhost:5000/swagger
-
-Cela vous permet de tester toutes les routes directement depuis votre navigateur.
+   
 
 # Structure de la base de données
 
@@ -73,9 +66,6 @@ L'API utilise SQLite comme base de données. Elle comporte trois tables principa
 
 # Initialisation de la Base de Données
 Lorsque l'application est lancée pour la première fois, la base de données est initialisée avec des données par défaut à l'aide d'un fichier JSON. Vous pouvez ajouter de nouvelles données ou les modifier via l'API.
-
-# Contribuer
-Si vous souhaitez contribuer à l'amélioration de cette API, vous pouvez effectuer des pull requests ou soumettre des issues sur GitHub.
 
 # Contact Github
 DubertJulie,Zélie Lemahieu,kevin2759
