@@ -1,71 +1,81 @@
-Fringale API - Gestion des Commandes pour Restaurateurs
+# Fringale API - Gestion des Commandes pour Restaurateurs
 
 Bienvenue dans l'API Fringale, une solution de gestion de commandes pour les restaurateurs. Cette API permet de gérer les clients, les commandes et les plats via des opérations CRUD (Créer, Lire, Mettre à jour, Supprimer).
 
-Prérequis
-.NET 6 ou version supérieure
-SQLite pour la base de données
-Swagger pour la documentation de l'API
+## Prérequis
 
-Fonctionnalités
-1. Gestion des Clients
-GET /clients: Récupère tous les clients
-GET /clients/{id}: Récupère un client par son identifiant
-POST /clients: Crée un nouveau client
-PUT /clients/{id}: Modifie les informations d'un client
-DELETE /clients/{id}: Supprime un client
+- .NET 6 ou version supérieure
+- SQLite pour la base de données
+- Swagger pour la documentation de l'API
 
-2. Gestion des Commandes
-GET /commandes: Récupère toutes les commandes
-GET /commandes/{id}: Récupère une commande par son identifiant
-GET /commandes/date/{date_co}: Récupère des commandes par leur date
-POST /commandes: Crée une nouvelle commande
-PUT /commandes/{id}: Modifie une commande
-DELETE /commandes/{id}: Supprime une commande
+## Fonctionnalités
 
-3. Gestion des Plats
-GET /plats: Récupère tous les plats
-GET /plats/{id}: Récupère un plat par son identifiant
-POST /plats: Crée un nouveau plat
-PUT /plats/{id}: Modifie un plat
-DELETE /plats/{id}: Supprime un plat
+### 1. Gestion des Clients
+- **GET /clients**: Récupère tous les clients
+- **GET /clients/{id}**: Récupère un client par son identifiant
+- **POST /clients**: Crée un nouveau client
+- **PUT /clients/{id}**: Modifie les informations d'un client
+- **DELETE /clients/{id}**: Supprime un client
 
-Installation
-Clonez le projet sur votre machine locale.
-git clone https://github.com/votre-repository/FringaleAPI.git
-cd FringaleAPI
+### 2. Gestion des Commandes
+- **GET /commandes**: Récupère toutes les commandes
+- **GET /commandes/{id}**: Récupère une commande par son identifiant
+- **GET /commandes/date/{date_co}**: Récupère des commandes par leur date
+- **POST /commandes**: Crée une nouvelle commande
+- **PUT /commandes/{id}**: Modifie une commande
+- **DELETE /commandes/{id}**: Supprime une commande
 
-Assurez-vous que vous avez .NET 6 ou version supérieure installé sur votre machine.
+### 3. Gestion des Plats
+- **GET /plats**: Récupère tous les plats
+- **GET /plats/{id}**: Récupère un plat par son identifiant
+- **POST /plats**: Crée un nouveau plat
+- **PUT /plats/{id}**: Modifie un plat
+- **DELETE /plats/{id}**: Supprime un plat
+
+## Installation
+
+1. Clonez le projet sur votre machine locale.
+   
+   git clone https://github.com/votre-repository/FringaleAPI.git
+   cd FringaleAPI
+
+2. Assurez-vous que vous avez .NET 6 ou version supérieure installé sur votre machine.
 Vous pouvez vérifier la version avec cette commande:
-dotnet --version
 
-Installez les dépendances avec la commande suivante:
-dotnet restore
+   dotnet --version
 
-Créez et appliquez la base de données avec cette commande:
-dotnet ef database update
+3. Installez les dépendances avec la commande suivante:
 
-Lancez l'API:
-dotnet run
-L'application sera disponible à http://localhost:5000.
+   dotnet restore
 
-Documentation de l'API avec Swagger
+4.  Créez et appliquez la base de données avec cette commande
+  
+    dotnet ef database update 
+
+5. Lancez l'API:
+ 
+   dotnet run
+
+   L'application sera disponible à http://localhost:5000.
+
+# Documentation de l'API avec Swagger
 Lors de l'exécution en mode développement, vous pouvez accéder à la documentation Swagger de l'API à l'URL suivante :
 http://localhost:5000/swagger
+
 Cela vous permet de tester toutes les routes directement depuis votre navigateur.
 
-Structure de la base de données
+# Structure de la base de données
+
 L'API utilise SQLite comme base de données. Elle comporte trois tables principales :
+- **Clients**: Contient les informations des clients (nom, prénom, adresse, téléphone).
+- **Commandes**: Contient les informations des commandes (montant, date, référence client).
+- **Plats**:Contient les informations des plats (nom, prix, catégorie).
 
-Clients: Contient les informations des clients (nom, prénom, adresse, téléphone).
-Commandes: Contient les informations des commandes (montant, date, référence client).
-Plats: Contient les informations des plats (nom, prix, catégorie).
-
-Initialisation de la Base de Données
+# Initialisation de la Base de Données
 Lorsque l'application est lancée pour la première fois, la base de données est initialisée avec des données par défaut à l'aide d'un fichier JSON. Vous pouvez ajouter de nouvelles données ou les modifier via l'API.
 
-Contribuer
+# Contribuer
 Si vous souhaitez contribuer à l'amélioration de cette API, vous pouvez effectuer des pull requests ou soumettre des issues sur GitHub.
 
-Contact GhitHub:
+# Contact Github
 DubertJulie,Zélie Lemahieu,kevin2759
