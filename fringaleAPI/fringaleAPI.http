@@ -1,0 +1,7 @@
+﻿@fringaleAPI_HostAddress = https://localhost:7073
+
+
+GET {{fringaleAPI_HostAddress}}/commandes
+
+###
+

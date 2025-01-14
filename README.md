@@ -1,3 +1,4 @@
+
 # Fringale API - Gestion des Commandes pour Restaurateurs
 
 Bienvenue dans l'API Fringale, une solution de gestion de commandes pour les restaurateurs. Cette API permet de gérer les clients, les commandes et les plats via des opérations CRUD (Créer, Lire, Mettre à jour, Supprimer).
