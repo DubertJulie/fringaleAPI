@@ -1,5 +1,5 @@
 
-# Fringale API - Gestion des Commandes pour Restaurateurs
+# Fringale API 🥒
 
 Bienvenue dans l'API Fringale, une solution de gestion de commandes pour les restaurateurs. Cette API permet de gérer les clients, les commandes et les plats via des opérations CRUD (Créer, Lire, Mettre à jour, Supprimer).
 
@@ -11,14 +11,14 @@ Bienvenue dans l'API Fringale, une solution de gestion de commandes pour les res
 
 ## Fonctionnalités
 
-### 1. Gestion des Clients
+### 1. Gestion des Clients 🥒
 - **GET /clients**: Récupère tous les clients
 - **GET /clients/{id}**: Récupère un client par son identifiant
 - **POST /clients**: Crée un nouveau client
 - **PUT /clients/{id}**: Modifie les informations d'un client
 - **DELETE /clients/{id}**: Supprime un client
 
-### 2. Gestion des Commandes
+### 2. Gestion des Commandes 🥒
 - **GET /commandes**: Récupère toutes les commandes
 - **GET /commandes/{id}**: Récupère une commande par son identifiant
 - **GET /commandes/date/{date_co}**: Récupère des commandes par leur date
@@ -26,7 +26,7 @@ Bienvenue dans l'API Fringale, une solution de gestion de commandes pour les res
 - **PUT /commandes/{id}**: Modifie une commande
 - **DELETE /commandes/{id}**: Supprime une commande
 
-### 3. Gestion des Plats
+### 3. Gestion des Plats 🥒
 - **GET /plats**: Récupère tous les plats
 - **GET /plats/{id}**: Récupère un plat par son identifiant
 - **POST /plats**: Crée un nouveau plat
